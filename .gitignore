@@ -1,0 +1,27 @@
+# --- Secrets: NEVER commit these ---
+.env
+*.env
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- Logs & runtime output ---
+logs/*
+!logs/.gitkeep
+
+# --- OS / editor noise ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --- Data dumps (if you ever export locally) ---
+*.csv
+*.sqlite
+*.db

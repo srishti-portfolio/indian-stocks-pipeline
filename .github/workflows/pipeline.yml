@@ -1,0 +1,60 @@
+# =============================================================
+# Scheduled pipeline run.
+#
+# Runs the extract -> transform -> quality steps automatically on
+# weekday evenings, after the Indian market has closed.
+#
+# REQUIRED setup:
+#   In your GitHub repo: Settings > Secrets and variables > Actions,
+#   add this repository secret (same key as .env):
+#     - DATABASE_URL
+# =============================================================
+
+name: stocks-pipeline
+
+on:
+  schedule:
+    # cron is in UTC. 14:00 UTC = 19:30 IST — comfortably after the
+    # NSE close (15:30 IST). Mon–Fri only; markets shut on weekends.
+    - cron: "0 14 * * 1-5"
+  # Manual trigger from the Actions tab — invaluable for testing
+  # without waiting for the schedule.
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          # Orchestrates: ensure tables -> upsert dim_stock -> extract
+          # -> insert into raw -> rebuild fact_daily_prices -> quality.
+          # Exits non-zero on any failure so the run shows red.
+          python -m extract.fetch_prices
+
+      - name: Upload logs
+        # always() => upload even if the run failed, so a failed
+        # scheduled job is actually debuggable.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-logs
+          path: logs/
+          retention-days: 14

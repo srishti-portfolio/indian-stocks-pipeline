@@ -1,0 +1,69 @@
+# =============================================================
+# The basket of instruments the pipeline tracks.
+#
+# Single source of truth for:
+#   - which symbols the extract step fetches from yfinance
+#   - the metadata that populates the dim_stock dimension table
+#
+# yfinance ticker convention:
+#   - NSE listings: SYMBOL.NS  (e.g. RELIANCE.NS, TCS.NS)
+#   - BSE listings: SYMBOL.BO  (e.g. RELIANCE.BO)
+# We track the NSE listing for each name since NSE volume is generally higher.
+#
+# To track something new: add an entry here. No code change needed.
+# =============================================================
+
+stocks:
+  - symbol: "RELIANCE.NS"
+    company_name: "Reliance Industries Ltd"
+    sector: "Energy"
+    exchange: "NSE"
+
+  - symbol: "TCS.NS"
+    company_name: "Tata Consultancy Services Ltd"
+    sector: "IT"
+    exchange: "NSE"
+
+  - symbol: "HDFCBANK.NS"
+    company_name: "HDFC Bank Ltd"
+    sector: "Financials"
+    exchange: "NSE"
+
+  - symbol: "INFY.NS"
+    company_name: "Infosys Ltd"
+    sector: "IT"
+    exchange: "NSE"
+
+  - symbol: "ITC.NS"
+    company_name: "ITC Ltd"
+    sector: "Consumer Staples"
+    exchange: "NSE"
+
+  - symbol: "ICICIBANK.NS"
+    company_name: "ICICI Bank Ltd"
+    sector: "Financials"
+    exchange: "NSE"
+
+  - symbol: "LT.NS"
+    company_name: "Larsen & Toubro Ltd"
+    sector: "Industrials"
+    exchange: "NSE"
+
+  - symbol: "BHARTIARTL.NS"
+    company_name: "Bharti Airtel Ltd"
+    sector: "Telecom"
+    exchange: "NSE"
+
+  - symbol: "HINDUNILVR.NS"
+    company_name: "Hindustan Unilever Ltd"
+    sector: "Consumer Staples"
+    exchange: "NSE"
+
+  - symbol: "SBIN.NS"
+    company_name: "State Bank of India"
+    sector: "Financials"
+    exchange: "NSE"
+
+# Start with ~10. Small enough to debug quickly, big enough to make the
+# dashboard interesting (multiple sectors). Expand to the full Nifty 50
+# once the pipeline runs cleanly.

@@ -12,7 +12,7 @@ Deploy to Streamlit Community Cloud:
   secret in the Streamlit deployment settings.
 """
 from __future__ import annotations
-
+import os 
 import sys
 from pathlib import Path
 
@@ -21,6 +21,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+
+# Bridge Streamlit Cloud secrets into os.environ BEFORE importing
+# load.db. On Streamlit Cloud, secrets live in st.secrets, not in the
+# process environment — without this, load.db raises "DATABASE_URL is
+# not set". Locally (via .env) and in GitHub Actions (via the env: block
+# in the workflow) os.environ is already populated, so this is a no-op.
+try:
+    for key, value in st.secrets.items():
+        os.environ.setdefault(key, str(value))
+except (FileNotFoundError, st.errors.StreamlitSecretNotFoundError):
+    # No secrets.toml present — running locally with .env. Fine.
+    pass
 
 from load.db import query_df
 

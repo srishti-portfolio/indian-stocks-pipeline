@@ -1,6 +1,6 @@
 # --- Core pipeline ---
 yfinance==1.3.0          # Yahoo Finance data source for NSE/BSE
-psycopg2-binary==2.9.9    # PostgreSQL driver
+psycopg2-binary>=2.9.9    # PostgreSQL driver
 SQLAlchemy==2.0.35        # connection management + safe SQL execution
 python-dotenv==1.0.1      # loads .env for local development
 PyYAML==6.0.2             # reads config/stocks.yaml

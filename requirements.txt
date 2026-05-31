@@ -1,15 +1,11 @@
 # --- Core pipeline ---
-yfinance==1.3.0          # Yahoo Finance data source for NSE/BSE
+yfinance>=0.2.50          # Yahoo Finance data source for NSE/BSE
 psycopg2-binary>=2.9.9    # PostgreSQL driver
-SQLAlchemy==2.0.35        # connection management + safe SQL execution
-python-dotenv==1.0.1      # loads .env for local development
-PyYAML==6.0.2             # reads config/stocks.yaml
-pandas==2.2.3             # shaping data before load
+SQLAlchemy>=2.0.35        # connection management + safe SQL execution
+python-dotenv>=1.0.1      # loads .env for local development
+PyYAML>=6.0.2             # reads config/stocks.yaml
+pandas>=2.2.3             # shaping data before load
 
 # --- Dashboard ---
-streamlit==1.39.0         # the live dashboard
-plotly==5.24.1            # interactive charts in the dashboard
-
-# Note: pin versions so GitHub Actions and your local env behave identically.
-# If a yfinance install error shows up later, try a slightly newer pin —
-# yfinance ships frequent patches when Yahoo's internals shift.
+streamlit>=1.39.0         # the live dashboard
+plotly>=5.24.1            # interactive charts in the dashboard

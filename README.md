@@ -5,7 +5,7 @@
 > SQL into analytics-ready tables, validates it with data-quality
 > checks, and serves it through a live Streamlit dashboard.
 
-**Live dashboard:** _<link once deployed>_
+**Live dashboard:** https://indian-stocks-pipeline-srishti.streamlit.app/
 
 ![Dashboard](docs/dashboard.png)
 
